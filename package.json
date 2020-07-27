@@ -1,0 +1,29 @@
+{
+  "name": "first",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "tsc && node dist/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yug2002/first_typescript_project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yug2002/first_typescript_project/issues"
+  },
+  "homepage": "https://github.com/yug2002/first_typescript_project#readme",
+  "devDependencies": {
+    "selenium-webdriver": "^4.0.0-alpha.7",
+    "tslint": "^6.1.2",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "@types/selenium-webdriver": "^4.0.9"
+  }
+}

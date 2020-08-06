@@ -7,7 +7,7 @@ import Data from '../constants';
 const chromeOptions = (): chrome.Options =>  {
   const opts = new chrome.Options(); 
   opts.addArguments("test-type");
-  //opts.addArguments("start-maximized");
+  opts.addArguments("start-maximized");
   opts.addArguments("--js-flags=--expose-gc");
   opts.addArguments("--enable-precise-memory-info");
   opts.addArguments("--disable-popup-blocking");

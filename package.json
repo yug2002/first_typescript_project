@@ -5,7 +5,8 @@
   "main": "dist/app.js",
   "scripts": {
     "start": "tsc && node dist/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --outDir lib"
   },
   "repository": {
     "type": "git",
@@ -19,11 +20,16 @@
   },
   "homepage": "https://github.com/yug2002/first_typescript_project#readme",
   "devDependencies": {
+    "@types/chai": "^4.2.12",
+    "@types/mocha": "^8.0.1",
+    "@types/selenium-webdriver": "^4.0.9",
+    "chai": "^4.2.0",
+    "mocha": "^8.1.1",
     "selenium-webdriver": "^4.0.0-alpha.7",
+    "ts-mocha": "^7.0.0",
+    "ts-node": "^8.10.2",
     "tslint": "^6.1.2",
     "typescript": "^3.9.7"
   },
-  "dependencies": {
-    "@types/selenium-webdriver": "^4.0.9"
-  }
+  "dependencies": {}
 }

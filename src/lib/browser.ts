@@ -1,7 +1,6 @@
 import { Builder, ThenableWebDriver } from 'selenium-webdriver';
 import chrome from 'selenium-webdriver/chrome';
 import firefox from 'selenium-webdriver/firefox';
-import { SupportedBrowsers as browsers } from './supported_browsers';
 import Data from '../constants';
 
 const chromeOptions = (): chrome.Options =>  {
@@ -24,9 +23,12 @@ const firefoxOptions = (): firefox.Options => {
 export default class Browser {
 
   private static instance: Browser;
-  private driver: ThenableWebDriver;
-
-  private constructor(){};
+  private _driver: ThenableWebDriver;
+  private constructor() {
+    if (Browser.instance) {
+      throw new Error("Error - use Browser.getInstance()");
+    }
+  };
 
   public static getInstance(): Browser {
     if(!Browser.instance) {
@@ -36,50 +38,37 @@ export default class Browser {
     return Browser.instance;
   }
 
-  public get getChromeDriver(): ThenableWebDriver {
-    return new Builder().forBrowser('chrome').setChromeOptions(chromeOptions()).build()
-  };
-
-  public get getFirefoxDriver(): ThenableWebDriver {
-    return new Builder().forBrowser('firefox').setFirefoxOptions(firefoxOptions()).build()
+  public get currDriver(): ThenableWebDriver {
+    return this._driver
   }
 
-  public async setUpDriver(driver: ThenableWebDriver): Promise<void> {
-    return await driver.manage().window().maximize();
-  }
-
-  public get wrappedDriver(): ThenableWebDriver {
-    return this.getDriver(Data.currentBrowser);
-  }
   public async open(url: string): Promise<void> {
-    return await (await this.driver).get(url);
+    return await (await this._driver).get(url);
   };
 
   public async close(): Promise<void> {
     try {
-      await (await this.driver).quit();
+      await (await this._driver).quit();
     } catch(e) {
       if(e instanceof Error) {
         console.log(e);
       }
     } finally {
       Browser.instance = null;
-      this.driver = null;
+      this._driver = null;
     }
   };
 
   public async pause(milliseconds: number): Promise<void> {
-    return await (await this.driver).sleep(milliseconds);
+    return await (await this._driver).sleep(milliseconds);
   }
 
-  private setDriver(driver: ThenableWebDriver): void  { this.driver = driver};
+  private async setBrowser(name: string): Promise<void> {
+    this._driver = new Builder().forBrowser(name).build();
+    return await this._driver.manage().window().maximize();
+  }
 
-  private getDriver(browserType: browsers): ThenableWebDriver {
-    switch(browserType) {
-      case browsers.chrome: this.setDriver(this.getChromeDriver); break;
-      case browsers.firefox: this.setDriver(this.getFirefoxDriver); break;
-      default: throw new Error('There is no any browser found');
-    }
-    return this.driver;
+  public async start() {
+    await this.setBrowser(Data.currentBrowser);
   }
 }

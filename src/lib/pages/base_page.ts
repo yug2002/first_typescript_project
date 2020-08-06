@@ -1,4 +1,3 @@
-import Data from '../../constants';
 import IFind from '../interfaces/i_find';
 import Element from '../elements/base_element'
 import { By, ThenableWebDriver, Locator } from 'selenium-webdriver';
@@ -29,6 +28,5 @@ export default abstract class BasePage implements IFind {
   async open(url: string): Promise<void> {
     return await (await this._driver).get(url);
   }
-
 }
 

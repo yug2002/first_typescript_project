@@ -1,4 +1,4 @@
-function getAllItems(): Array<object> {
+function getAllItems(): object[] {
   const items = [{ name: 'Vasya'}, { name: 'Petya' }, { name: 'Vanya'}];
   return items;
 };
@@ -9,9 +9,7 @@ interface BookInterface {
   pages: number
 }
 
-interface BookConstructorInterface {
-  new (title: string, author: string, pages: number): BookInterface; 
-}
+type BookConstructorInterface = new (title: string, author: string, pages: number) => BookInterface;
 
 function createBook(ctor: BookConstructorInterface, title: string, author: string, pages: number) {
   return new ctor(title, author, pages)

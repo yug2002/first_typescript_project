@@ -6,7 +6,7 @@ const allureArtifactsDir = process.env.OUTDIR
 
 module.exports = {
   timeout: SIXTY_SECS,
-  spec: path.resolve('./test/**/*.spec.js'),
+  spec: path.resolve('./dist/test/**/*.spec.js'),
   opts: false,
   reporter: 'spec',
   // reporter: 'mocha-allure-reporter',  

@@ -1,5 +1,5 @@
 import BasePage from '../base_page';
-import Data from '../../../constants' 
+import Data from '../../../constants'
 import Element from '../../elements/base_element';
 import { By, ThenableWebDriver } from 'selenium-webdriver';
 
@@ -21,4 +21,4 @@ export default class HomePage extends BasePage {
   async buttonByName(name:string): Promise<Element> {
     return await this.find(By.xpath(button(name)));
   }
-} 
+}

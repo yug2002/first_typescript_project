@@ -5,8 +5,9 @@
   "main": "dist/app.js",
   "scripts": {
     "start": "tsc && node dist/app.js",
-    "test": "mocha .mocharc.ts",
-    "build": "tsc --outDir dist"
+    "test": "mocha .mocharc.js",
+    "build": "npm run lint && tsc --outDir dist",
+    "lint": "tslint --fix src/**/*.ts"
   },
   "repository": {
     "type": "git",

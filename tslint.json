@@ -3,7 +3,9 @@
   "extends": ["tslint:recommended"],
   "jsRules": {},
   "rules": {
-    "no-console": false
+    "no-console": false,    
+    "max-line-length": [true, 121],
+    "prefer-array-literal": false
   },
   "rulesDirectory": []
 }

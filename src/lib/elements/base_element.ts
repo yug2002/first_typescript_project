@@ -2,18 +2,15 @@ import { IWebElementFinders, Locator, WebElementPromise, WebElement } from 'sele
 import IFind from '../interfaces/i_find';
 
 export default class Element implements IWebElementFinders, IFind  {
-  private _element: WebElement; 
+  private _element: WebElement;
 
   constructor(element: WebElement);
   constructor(element?: any) {
     if(element instanceof WebElement) {
       this._element = element;
     }
-    else {
-      
-    }
   }
-  
+
   findElement(locator: Locator): WebElementPromise {
     return this._element.findElement(locator);
   }
@@ -27,16 +24,16 @@ export default class Element implements IWebElementFinders, IFind  {
   }
 
   async findAll(locator: Locator): Promise<Element[]> {
-    let collection = await this.findElements(locator);
+    const collection = await this.findElements(locator);
     return collection.map(el => new Element(el));
   }
-  
+
   click(): Promise<void> {
     return this._element.click();
   }
 
-  type(...var_args: (string | number | Promise<string | number>)[]): Promise<void> {
-    return this._element.sendKeys(...var_args);
+  type(text:string): Promise<void> {
+    return this._element.sendKeys(text);
   }
 
   getTagName(): Promise<string> {

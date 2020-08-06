@@ -1,3 +1,1 @@
-export default interface IPredicate {
-  (predicate: Function, ...args: any): Promise<boolean>
-}
+export type Predicate = (...args: any[]) => Promise<boolean>

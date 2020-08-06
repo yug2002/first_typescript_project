@@ -5,19 +5,19 @@ import { SupportedBrowsers as browsers } from './supported_browsers';
 import Data from '../constants';
 
 const chromeOptions = (): chrome.Options =>  {
-  const opts = new chrome.Options(); 
+  const opts = new chrome.Options();
   opts.addArguments("test-type");
   opts.addArguments("start-maximized");
   opts.addArguments("--js-flags=--expose-gc");
   opts.addArguments("--enable-precise-memory-info");
   opts.addArguments("--disable-popup-blocking");
   opts.addArguments("--disable-default-apps");
-  opts.addArguments("--disable-infobars");  
-  return opts;  
+  opts.addArguments("--disable-infobars");
+  return opts;
 };
 
 const firefoxOptions = (): firefox.Options => {
-  const opts = new firefox.Options();  
+  const opts = new firefox.Options();
   return opts;
 }
 
@@ -47,7 +47,7 @@ export default class Browser {
   public async setUpDriver(driver: ThenableWebDriver): Promise<void> {
     return await driver.manage().window().maximize();
   }
-  
+
   public get wrappedDriver(): ThenableWebDriver {
     return this.getDriver(Data.currentBrowser);
   }
@@ -61,11 +61,11 @@ export default class Browser {
     } catch(e) {
       if(e instanceof Error) {
         console.log(e);
-      }      
+      }
     } finally {
       Browser.instance = null;
       this.driver = null;
-    }    
+    }
   };
 
   public async pause(milliseconds: number): Promise<void> {

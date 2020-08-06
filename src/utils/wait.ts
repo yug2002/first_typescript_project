@@ -1,7 +1,8 @@
 import data from '../constants';
 const delay = data.timeout;
 
-export const waitFor = async (predicate: Function, milliseconds: number = delay): Promise<boolean> => new Promise (resolve => {
+export const waitFor = async (predicate: () => Promise<boolean>, milliseconds: number = delay):
+ Promise<boolean> => new Promise (resolve => {
   const dl = 200;
   let mls = milliseconds;
   const f = async () => {

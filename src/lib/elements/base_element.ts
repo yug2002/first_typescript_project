@@ -1,5 +1,6 @@
-import { IWebElementFinders, Locator, WebElementPromise, WebElement } from 'selenium-webdriver';
+import { IWebElementFinders, Locator, WebElementPromise, WebElement, ThenableWebDriver } from 'selenium-webdriver';
 import IFind from '../interfaces/i_find';
+// import Browser from '../browser';
 
 export default class Element implements IWebElementFinders, IFind  {
   private _element: WebElement;

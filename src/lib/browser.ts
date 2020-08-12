@@ -2,6 +2,7 @@ import { Builder, ThenableWebDriver } from 'selenium-webdriver';
 import chrome from 'selenium-webdriver/chrome';
 import firefox from 'selenium-webdriver/firefox';
 import Data from '../constants';
+import { writeFile } from 'fs';
 
 const chromeOptions = (): chrome.Options =>  {
   const opts = new chrome.Options();
@@ -42,11 +43,11 @@ export default class Browser {
     return this._driver
   }
 
-  public async open(url: string): Promise<void> {
+  public async open(url: string) {
     return await (await this._driver).get(url);
   };
 
-  public async close(): Promise<void> {
+  public async stop() {
     try {
       await (await this._driver).quit();
     } catch(e) {
@@ -59,16 +60,21 @@ export default class Browser {
     }
   };
 
-  public async pause(milliseconds: number): Promise<void> {
+  public async pause(milliseconds: number) {
     return await (await this._driver).sleep(milliseconds);
   }
 
-  private async setBrowser(name: string): Promise<void> {
+  private async setBrowser(name: string) {
     this._driver = new Builder().forBrowser(name).build();
     return await this._driver.manage().window().maximize();
   }
 
   public async start() {
     await this.setBrowser(Data.currentBrowser);
+  }
+
+  public async takeScreenshot(file: string) {
+    return (await this._driver).takeScreenshot().then(
+      image => writeFile (file, image, 'base64', (error)=> console.log(error)));
   }
 }

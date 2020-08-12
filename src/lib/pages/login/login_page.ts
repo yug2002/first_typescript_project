@@ -17,4 +17,8 @@ export default class LoginPage extends BasePage {
   async accountElement(): Promise<Element> {
     return await this.find(By.xpath(personalAccount));
   }
+
+  async errorElement(error: string): Promise<Element> {
+    return await this.find(By.xpath(errorElement(error)));
+  }
 }

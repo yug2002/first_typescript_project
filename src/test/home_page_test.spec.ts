@@ -1,50 +1,100 @@
-import Browser from '../lib/browser'
-import { getPage as pages } from '../lib/pages/page_factory'
+import Browser from '../lib/browser';
+import { getPage as pages } from '../lib/pages/page_factory';
 import HomePage from '../lib/pages/home/home_page';
 import { expect } from 'chai';
 import LoginPage from '../lib/pages/login/login_page';
 import data from '../constants';
 import TodoPage from '../lib/pages/todo/todo_page';
+import * as helpers from '../utils/helpers';
+import { allure } from 'mocha-allure-reporter';
+// import AllureReporter from 'mocha-allure-reporter';
 
+// declare const allure: any;
 const { login, password } = data;
+const getString = helpers.generatedString;
 
 describe('check home page', () => {
   let home: HomePage;
+  let browser: Browser;
+  describe('positive scenarios for home page', () => {
 
-  beforeEach(async () => {
-    // browser = Browser.getInstance();
-    await Browser.getInstance().start();
-    home = pages('Home', Browser.getInstance().currDriver) as HomePage;
-    await home.open();
+    beforeEach(async () => {
+      browser = Browser.getInstance();
+      await browser.start();
+      home = pages('Home', browser.currDriver) as HomePage;
+      await home.open();
+    })
+
+    afterEach(async function() {
+      try{
+        if(this.currentTest.state === 'failed') {
+          const title:string =  this.currentTest.title;
+          await browser.takeScreenshot(`screenShot ${title}${Date.now()}.png`);
+          // const png = await (await browser.currDriver).takeScreenshot();
+          // allure.createAttachment('screenshot',new Buffer(png,'base64'),'image/png');
+        }
+      } catch(e) {
+        console.log('lalalalalalalalalal ' + e);
+      } finally {
+        await browser.stop();
+      }
+    })
+
+    it('check that home page is opened', async () => {
+      const title = await home.title();
+      expect(await title.getText()).to.be.equal('Microsoft To Do');
+    });
+
+    it('check that user can login', async () => {
+      const getStartedButton = await home.buttonByName('Get started');
+      await getStartedButton.click();
+      const loginPage = pages('Login', browser.currDriver) as LoginPage;
+      const emailInput = await loginPage.inputByType('email');
+      await emailInput.type(login);
+      let submit = await loginPage.inputByType('submit');
+      await submit.click();
+      const account = await loginPage.accountElement();
+      await account.click();
+      const passwordInput = await loginPage.inputByType('password');
+      await passwordInput.type(password);
+      submit = await loginPage.inputByType('submit');
+      await submit.click();
+      const todoPage = pages('todo', browser.currDriver) as TodoPage;
+      const title = await todoPage.pageTitle();
+      expect(await title.getText()).to.be.equal('To Do');
+    });
   })
 
-  afterEach(async () => {
-    if(Browser.getInstance().currDriver) {
-      await Browser.getInstance().close();
-    }
-  })
+  const tests = [{log: getString(13)}, { log: getString(10)}, { log: getString(10)}];
 
-  it('check that home page is opened', async () => {
-    const title = await home.title();
-    expect(await title.getText()).to.be.equal('Microsoft To Do');
-  });
+  tests.forEach(run => {
+    describe('negative scenarios for home page', () => {
+      beforeEach(async () => {
+        browser = Browser.getInstance();
+        await browser.start();
+        home = pages('Home', browser.currDriver) as HomePage;
+        await home.open();
+      })
 
-  it('check that user can login', async () => {
-    const getStartedButton = await home.buttonByName('Get started');
-    await getStartedButton.click();
-    const loginPage = pages('Login', Browser.getInstance().currDriver) as LoginPage;
-    const emailInput = await loginPage.inputByType('email');
-    await emailInput.type(login);
-    let submit = await loginPage.inputByType('submit');
-    await submit.click();
-    const account = await loginPage.accountElement();
-    await account.click();
-    const passwordInput = await loginPage.inputByType('password');
-    await passwordInput.type(password);
-    submit = await loginPage.inputByType('submit');
-    await submit.click();
-    const todoPage = pages('todo', Browser.getInstance().currDriver) as TodoPage;
-    const title = await todoPage.pageTitle();
-    expect(await title.getText()).to.be.equal('To Do');
+      afterEach(async function() {
+        if(this.currentTest.state === 'failed') {
+          const title:string =  this.currentTest.title;
+          await browser.takeScreenshot(`screenShot ${title}${Date.now()}.png`);
+        }
+        await browser.stop();
+      })
+
+      it('check negative login scenarios', async () => {
+        const button = await home.buttonByName('Get started');
+        await button.click();
+        const loginPage = pages('login', browser.currDriver) as LoginPage;
+        const emailInput = await loginPage.inputByType('email');
+        await emailInput.type(run.log);
+        const submit = await loginPage.inputByType('submit');
+        await submit.click();
+        const error = await loginPage.errorElement('username');
+        expect(await error.isDisplayed()).to.be.equal(true);
+      });
+    })
   })
 })

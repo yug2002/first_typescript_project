@@ -1,6 +1,6 @@
 import IFind from '../interfaces/i_find';
 import Element from '../elements/base_element'
-import { By, ThenableWebDriver, Locator } from 'selenium-webdriver';
+import { By, ThenableWebDriver, until } from 'selenium-webdriver';
 import * as wait from '../../utils/wait';
 import { Predicate } from '../interfaces/i_predicate';
 
@@ -12,7 +12,7 @@ export default abstract class BasePage implements IFind {
     this._driver = driver;
   }
 
-  async find(by: Locator): Promise<Element> {
+  async find(by: By): Promise<Element> {
     this.predicate = (async () => (await (await this._driver).findElements(by)).length > 0);
     await wait.waitFor(this.predicate);
     return new Element((await this._driver).findElement(by));

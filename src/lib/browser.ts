@@ -3,6 +3,7 @@ import chrome from 'selenium-webdriver/chrome';
 import firefox from 'selenium-webdriver/firefox';
 import Data from '../constants';
 import { writeFile } from 'fs';
+import Log from './logger/log';
 
 const chromeOptions = (): chrome.Options =>  {
   const opts = new chrome.Options();
@@ -58,6 +59,8 @@ export default class Browser {
       Browser.instance = null;
       this._driver = null;
     }
+
+    Log.debug(Data.currentBrowser + ' stop');
   };
 
   public async pause(milliseconds: number) {
@@ -70,6 +73,7 @@ export default class Browser {
   }
 
   public async start() {
+    Log.debug(Data.currentBrowser + ' start');
     await this.setBrowser(Data.currentBrowser);
   }
 

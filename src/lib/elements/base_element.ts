@@ -1,6 +1,6 @@
 import { IWebElementFinders, Locator, WebElementPromise, WebElement, ThenableWebDriver } from 'selenium-webdriver';
 import IFind from '../interfaces/i_find';
-// import Browser from '../browser';
+import Log from '../logger/log'
 
 export default class Element implements IWebElementFinders, IFind  {
   private _element: WebElement;
@@ -13,10 +13,12 @@ export default class Element implements IWebElementFinders, IFind  {
   }
 
   findElement(locator: Locator): WebElementPromise {
+    Log.debug('find element with locator ' + locator);
     return this._element.findElement(locator);
   }
 
   findElements(locator: Locator): Promise<WebElement[]> {
+    Log.debug('find all elements with locator ' + locator);
     return this._element.findElements(locator);
   }
 
@@ -30,10 +32,12 @@ export default class Element implements IWebElementFinders, IFind  {
   }
 
   click(): Promise<void> {
+    Log.debug(' and click');
     return this._element.click();
   }
 
   type(text:string): Promise<void> {
+    Log.debug(` and type '${text}'`)
     return this._element.sendKeys(text);
   }
 
@@ -50,6 +54,7 @@ export default class Element implements IWebElementFinders, IFind  {
   }
 
   getText(): Promise<string> {
+    Log.debug(' and get text');
     return this._element.getText();
   }
 
@@ -77,6 +82,7 @@ export default class Element implements IWebElementFinders, IFind  {
     throw new Error("Method not implemented.");
   }
   isDisplayed(): Promise<boolean> {
+    Log.debug(' and check that element is displayed');
     return this._element.isDisplayed();
   }
   getId(): Promise<import("selenium-webdriver").IWebElementId> {

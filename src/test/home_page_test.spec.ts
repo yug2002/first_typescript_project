@@ -6,10 +6,7 @@ import LoginPage from '../lib/pages/login/login_page';
 import data from '../constants';
 import TodoPage from '../lib/pages/todo/todo_page';
 import * as helpers from '../utils/helpers';
-import { allure } from 'mocha-allure-reporter';
-// import AllureReporter from 'mocha-allure-reporter';
 
-// declare const allure: any;
 const { login, password } = data;
 const getString = helpers.generatedString;
 

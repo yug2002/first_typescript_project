@@ -18,5 +18,5 @@ module.exports = {
   //       'showPassed=true'
   //   ],
   ui: 'bdd',
-  parallel: true
+  //parallel: true
 }

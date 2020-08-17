@@ -8,9 +8,9 @@ module.exports = {
   timeout: SIXTY_SECS,
   spec: path.resolve('./dist/test/**/*.spec.js'),
   opts: false,
-  reporter: 'spec',
-  // reporter: 'mocha-allure-reporter',  
-  // reporterOption: [ 'targetDir=' + allureArtifactsDir ],
+  //reporter: 'spec',
+  reporter: 'mocha-allure-reporter',  
+  reporterOption: [ 'targetDir=' + allureArtifactsDir ],
   // reporter: 'node_modules/mochawesome',
   //   'reporter-option': [
   //       'overwrite=true',

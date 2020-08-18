@@ -58,9 +58,8 @@ export default class Browser {
     } finally {
       Browser.instance = null;
       this._driver = null;
+      // Log.debug(Data.currentBrowser + ' stop');
     }
-
-    Log.debug(Data.currentBrowser + ' stop');
   };
 
   public async pause(milliseconds: number) {
@@ -69,16 +68,16 @@ export default class Browser {
 
   private async setBrowser(name: string) {
     this._driver = new Builder().forBrowser(name).build();
+    // Log.debug(Data.currentBrowser + ' start');
     return await this._driver.manage().window().maximize();
   }
 
   public async start() {
-    Log.debug(Data.currentBrowser + ' start');
     await this.setBrowser(Data.currentBrowser);
   }
 
   public async takeScreenshot(file: string) {
     return (await this._driver).takeScreenshot().then(
-      image => writeFile (file, image, 'base64', (error)=> console.log(error)));
+      image => writeFile (file, image, 'base64', (error)=> Log.error(error.message)));
   }
 }

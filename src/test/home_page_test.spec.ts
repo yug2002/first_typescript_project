@@ -27,7 +27,7 @@ describe('check home page', () => {
       try{
         if(this.currentTest.state === 'failed') {
           const title:string =  this.currentTest.title;
-          await browser.takeScreenshot(`screenShot ${title}${Date.now()}.png`);          
+          await browser.takeScreenshot(`screenShot ${title}${Date.now()}.png`);
         }
       } catch(e) {
         Log.error(e);

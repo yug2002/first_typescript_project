@@ -79,6 +79,6 @@ export default class Browser {
 
   public async takeScreenshot(file: string) {
     return (await this._driver).takeScreenshot().then(
-      image => writeFile (file, image, 'base64', (error)=> Log.error(error.message)));
+      image => writeFile (file, image, 'base64', (error)=> Log.error(error.toString())));
   }
 }

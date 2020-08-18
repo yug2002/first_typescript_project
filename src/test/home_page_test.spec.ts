@@ -17,6 +17,7 @@ describe('check home page', () => {
   describe('positive scenarios for home page', () => {
 
     beforeEach(async () => {
+      Log.debug(data.currentBrowser + ' start');
       browser = Browser.getInstance();
       await browser.start();
       home = pages('Home', browser.currDriver) as HomePage;
@@ -32,6 +33,7 @@ describe('check home page', () => {
       } catch(e) {
         Log.error(e);
       } finally {
+        Log.debug(data.currentBrowser + ' stop');
         await browser.stop();
       }
     })
@@ -66,6 +68,7 @@ describe('check home page', () => {
   tests.forEach(run => {
     describe('negative scenarios for home page', () => {
       beforeEach(async () => {
+        Log.debug(data.currentBrowser + ' start');
         browser = Browser.getInstance();
         await browser.start();
         home = pages('Home', browser.currDriver) as HomePage;
@@ -77,6 +80,7 @@ describe('check home page', () => {
           const title:string =  this.currentTest.title;
           await browser.takeScreenshot(`screenShot ${title}${Date.now()}.png`);
         }
+        Log.debug(data.currentBrowser + ' stop');
         await browser.stop();
       })
 

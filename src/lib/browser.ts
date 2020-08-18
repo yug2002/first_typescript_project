@@ -45,6 +45,7 @@ export default class Browser {
   }
 
   public async open(url: string) {
+    await this.pause(2000);
     return await (await this._driver).get(url);
   };
 

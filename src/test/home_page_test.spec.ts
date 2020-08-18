@@ -6,6 +6,7 @@ import LoginPage from '../lib/pages/login/login_page';
 import data from '../constants';
 import TodoPage from '../lib/pages/todo/todo_page';
 import * as helpers from '../utils/helpers';
+import Log from '../lib/logger/log';
 
 const { login, password } = data;
 const getString = helpers.generatedString;
@@ -26,12 +27,10 @@ describe('check home page', () => {
       try{
         if(this.currentTest.state === 'failed') {
           const title:string =  this.currentTest.title;
-          await browser.takeScreenshot(`screenShot ${title}${Date.now()}.png`);
-          // const png = await (await browser.currDriver).takeScreenshot();
-          // allure.createAttachment('screenshot',new Buffer(png,'base64'),'image/png');
+          await browser.takeScreenshot(`screenShot ${title}${Date.now()}.png`);          
         }
       } catch(e) {
-        console.log('lalalalalalalalalal ' + e);
+        Log.error(e);
       } finally {
         await browser.stop();
       }

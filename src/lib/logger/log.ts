@@ -1,6 +1,6 @@
 import { factory as log } from './config_log4j';
 
-const l = log.getLogger('product.Log');
+const l = log.getLogger(`product.Log`);
 
 export default class Log {
 
@@ -15,6 +15,4 @@ export default class Log {
   public static error(msg: string) {
     l.error(msg);
   }
-
-
 }

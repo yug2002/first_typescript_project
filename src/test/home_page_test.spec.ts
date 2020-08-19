@@ -31,7 +31,7 @@ describe('check home page', () => {
           await browser.takeScreenshot(`screenShot ${title}${Date.now()}.png`);
         }
       } catch(e) {
-        Log.error(e);
+        await Log.error(e);
       } finally {
         // Log.debug(data.currentBrowser + ' stop');
         await browser.stop();
@@ -93,7 +93,8 @@ describe('check home page', () => {
         const submit = await loginPage.inputByType('submit');
         await submit.click();
         const error = await loginPage.errorElement('username');
-        expect(await error.isDisplayed()).to.be.equal(true);
+        const result = await error.isDisplayed();
+        expect(result).to.be.equal(true);
       });
     })
   })

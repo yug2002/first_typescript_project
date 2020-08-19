@@ -1,6 +1,7 @@
 import { IWebElementFinders, Locator, WebElementPromise, WebElement, ThenableWebDriver } from 'selenium-webdriver';
 import IFind from '../interfaces/i_find';
 import Log from '../logger/log'
+import Browser from '../browser';
 
 export default class Element implements IWebElementFinders, IFind  {
   private _element: WebElement;
@@ -12,33 +13,35 @@ export default class Element implements IWebElementFinders, IFind  {
     }
   }
 
-  findElement(locator: Locator): WebElementPromise {
-    Log.debug('find element with locator ' + locator);
+   findElement(locator: Locator): WebElementPromise {
+
     return this._element.findElement(locator);
   }
 
   findElements(locator: Locator): Promise<WebElement[]> {
-    Log.debug('find all elements with locator ' + locator);
+
     return this._element.findElements(locator);
   }
 
   async find(locator: Locator): Promise<Element> {
+    Log.debug('find element with locator ' + locator);
     return new Element ( await this.findElement(locator));
   }
 
   async findAll(locator: Locator): Promise<Element[]> {
+    Log.debug('find all elements with locator ' + locator);
     const collection = await this.findElements(locator);
     return collection.map(el => new Element(el));
   }
 
-  click(): Promise<void> {
+  async click(): Promise<void> {
     Log.debug(' and click');
-    return this._element.click();
+    return await this._element.click();
   }
 
-  type(text:string): Promise<void> {
+  async type(text:string): Promise<void> {
     Log.debug(` and type '${text}'`)
-    return this._element.sendKeys(text);
+    return await this._element.sendKeys(text);
   }
 
   getTagName(): Promise<string> {
@@ -53,9 +56,9 @@ export default class Element implements IWebElementFinders, IFind  {
     throw new Error("Method not implemented.");
   }
 
-  getText(): Promise<string> {
+  async getText(): Promise<string> {
     Log.debug(' and get text');
-    return this._element.getText();
+    return await this._element.getText();
   }
 
   getSize(): Promise<import("selenium-webdriver").ISize> {
@@ -81,9 +84,10 @@ export default class Element implements IWebElementFinders, IFind  {
   clear(): Promise<void> {
     throw new Error("Method not implemented.");
   }
-  isDisplayed(): Promise<boolean> {
+  async isDisplayed(): Promise<boolean> {
+    await Browser.getInstance().pause(3000);
     Log.debug(' and check that element is displayed');
-    return this._element.isDisplayed();
+    return await this._element.isDisplayed();
   }
   getId(): Promise<import("selenium-webdriver").IWebElementId> {
     throw new Error("Method not implemented.");

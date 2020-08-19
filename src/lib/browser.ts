@@ -59,7 +59,7 @@ export default class Browser {
     } finally {
       Browser.instance = null;
       this._driver = null;
-      // Log.debug(Data.currentBrowser + ' stop');
+      Log.debug(Data.currentBrowser + ' stop');
     }
   };
 
@@ -69,7 +69,7 @@ export default class Browser {
 
   private async setBrowser(name: string) {
     this._driver = new Builder().forBrowser(name).build();
-    // Log.debug(Data.currentBrowser + ' start');
+    Log.debug(Data.currentBrowser + ' start');
     return await this._driver.manage().window().maximize();
   }
 
@@ -79,6 +79,6 @@ export default class Browser {
 
   public async takeScreenshot(file: string) {
     return (await this._driver).takeScreenshot().then(
-      image => writeFile (file, image, 'base64', (error)=> console.log(error + 'some error in takeScreenshot')));
+      image => writeFile (file, image, 'base64', (error) => console.log(error + ' some error in takeScreenshot')));
   }
 }

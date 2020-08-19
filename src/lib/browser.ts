@@ -59,7 +59,7 @@ export default class Browser {
     } finally {
       Browser.instance = null;
       this._driver = null;
-      Log.debug(Data.currentBrowser + ' stop');
+      await Log.debug(Data.currentBrowser + ' stop');
     }
   };
 
@@ -69,7 +69,7 @@ export default class Browser {
 
   private async setBrowser(name: string) {
     this._driver = new Builder().forBrowser(name).build();
-    Log.debug(Data.currentBrowser + ' start');
+    await Log.debug(Data.currentBrowser + ' start');
     return await this._driver.manage().window().maximize();
   }
 

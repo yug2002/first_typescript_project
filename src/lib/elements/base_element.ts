@@ -24,23 +24,23 @@ export default class Element implements IWebElementFinders, IFind  {
   }
 
   async find(locator: Locator): Promise<Element> {
-    Log.debug('find element with locator ' + locator);
+    await Log.debug('find element with locator ' + locator);
     return new Element ( await this.findElement(locator));
   }
 
   async findAll(locator: Locator): Promise<Element[]> {
-    Log.debug('find all elements with locator ' + locator);
+    await Log.debug('find all elements with locator ' + locator);
     const collection = await this.findElements(locator);
     return collection.map(el => new Element(el));
   }
 
   async click(): Promise<void> {
-    Log.debug(' and click');
+    await Log.debug(' and click');
     return await this._element.click();
   }
 
   async type(text:string): Promise<void> {
-    Log.debug(` and type '${text}'`)
+    await Log.debug(` and type '${text}'`)
     return await this._element.sendKeys(text);
   }
 
@@ -57,7 +57,7 @@ export default class Element implements IWebElementFinders, IFind  {
   }
 
   async getText(): Promise<string> {
-    Log.debug(' and get text');
+    await Log.debug(' and get text');
     return await this._element.getText();
   }
 
@@ -86,7 +86,7 @@ export default class Element implements IWebElementFinders, IFind  {
   }
   async isDisplayed(): Promise<boolean> {
     await Browser.getInstance().pause(3000);
-    Log.debug(' and check that element is displayed');
+    await Log.debug(' and check that element is displayed');
     return await this._element.isDisplayed();
   }
   getId(): Promise<import("selenium-webdriver").IWebElementId> {

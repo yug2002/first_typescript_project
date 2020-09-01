@@ -6,9 +6,9 @@ export function log(target: any, method: string, descriptor: PropertyDescriptor)
     const returnValue = await originalMethod.apply(this, args);
     const r = typeof(returnValue) === 'string' || typeof(returnValue) === 'boolean'  ? returnValue : '';
     if(args.length !== 0) {
-      await Log.debug(`[${target.constructor.name}] -> [${method}] -> ${JSON.stringify(args)}`);
+      await Log.debug(`class name:[${target.constructor.name}] -> method name:[${method}] -> ${JSON.stringify(args)}`);
     } else {
-      await Log.debug(`[${target.constructor.name}] -> [${method}]: return -> [${r}]`);
+      await Log.debug(`class name:[${target.constructor.name}] -> method name:[${method}]: return -> [${r}]`);
     }
     return returnValue;
   }

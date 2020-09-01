@@ -14,14 +14,14 @@ export default abstract class BasePage implements IFind {
   }
 
   @log
-  async find(by: By): Promise<Element> {   
+  async find(by: By): Promise<Element> {
     this.predicate = (async () => (await (await this._driver).findElements(by)).length > 0);
     await wait.waitFor(this.predicate);
     return new Element((await this._driver).findElement(by));
   }
 
   @log
-  async findAll(by: By): Promise<Element[]> {   
+  async findAll(by: By): Promise<Element[]> {
     this.predicate = (async () => (await (await this._driver).findElements(by)).length > 0);
     await wait.waitFor(this.predicate);
     const collection = (await this._driver).findElements(by);

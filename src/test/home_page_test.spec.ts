@@ -55,6 +55,8 @@ describe('check home page', () => {
       await passwordInput.type(password);
       submit = await loginPage.inputByType('submit');
       await submit.click();
+      submit = await loginPage.inputByType('submit');
+      await submit.click();
       const todoPage = pages('todo', browser.currDriver) as TodoPage;
       const title = await todoPage.pageTitle();
       expect(await title.getText()).to.be.equal('To Do');

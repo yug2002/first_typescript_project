@@ -22,20 +22,20 @@ export default class Element implements IWebElementFinders, IFind  {
   }
 
   @log
-  async find(locator: Locator): Promise<Element> {    
+  async find(locator: Locator): Promise<Element> {
     return new Element ( await this.findElement(locator));
   }
   @log
-  async findAll(locator: Locator): Promise<Element[]> {    
+  async findAll(locator: Locator): Promise<Element[]> {
     const collection = await this.findElements(locator);
     return collection.map(el => new Element(el));
   }
   @log
-  async click(): Promise<void> {   
+  async click(): Promise<void> {
     return await this._element.click();
   }
   @log
-  async type(text:string): Promise<void> {   
+  async type(text:string): Promise<void> {
     return await this._element.sendKeys(text);
   }
 
@@ -51,7 +51,7 @@ export default class Element implements IWebElementFinders, IFind  {
     throw new Error("Method not implemented.");
   }
   @log
-  async getText(): Promise<string> {    
+  async getText(): Promise<string> {
     return await this._element.getText();
   }
 
@@ -81,7 +81,7 @@ export default class Element implements IWebElementFinders, IFind  {
 
   @log
   async isDisplayed(): Promise<boolean> {
-    await Browser.getInstance().pause(3000);    
+    await Browser.getInstance().pause(3000);
     return await this._element.isDisplayed();
   }
   getId(): Promise<import("selenium-webdriver").IWebElementId> {

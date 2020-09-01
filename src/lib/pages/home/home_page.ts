@@ -14,7 +14,7 @@ export default class HomePage extends BasePage {
   async open(): Promise<void> {
     return await super.open(Data.applicationUrl);
   }
-  
+
   @log
   async title(): Promise<Element> {
     return await this.find(By.xpath(title));
